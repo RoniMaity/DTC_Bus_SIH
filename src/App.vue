@@ -9,12 +9,14 @@
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
 import HomePage from './components/HomePage.vue';
+import AboutUs from '/src/components/AboutUs.vue'
 // import delhi_transport_corporation_web_banner_1 from './assets/delhi_transport_corporation_web_banner_1.png';
 
 export default {
   name: 'App',
   components: {
   HomePage,
+  AboutUs,
   // delhi_transport_corporation_web_banner_1,
   }
 
