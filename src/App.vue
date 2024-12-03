@@ -5,7 +5,7 @@
    <!-- <delhi_transport_corporation_web_banner_1/> -->
   <HomePage></HomePage>
   <!-- <h1></h1> -->
-<router-view></router-view>
+<!-- <router-view></router-view> -->
 <!-- <HelloWorld> mdscwd</HelloWorld> -->
 <!-- <trial /> -->
 <!-- <login/> -->
@@ -25,11 +25,11 @@
 // import secondpage from './components/secondpage.vue'
 // import HelloWorld from './components/HelloWorld.vue'
 import HomePage from './components/HomePage.vue';
-import AboutUs from '/src/components/AboutUs.vue'
+// import AboutUs from '/src/components/AboutUs.vue'
 // import delhi_transport_corporation_web_banner_1 from './assets/delhi_transport_corporation_web_banner_1.png';
 // import Schedular from './components/schedular.vue';
 
-
+//hello
 // Define Vue feature flags globally
 global._VUE_PROD_HYDRATION_MISMATCH_DETAILS_ = false;
 // import help from './components/help.vue'
@@ -42,7 +42,7 @@ export default {
   name: 'App',
   components: {
   HomePage,
-  AboutUs,
+  // AboutUs,
   // delhi_transport_corporation_web_banner_1,
   // Schedular,
         // trial,
