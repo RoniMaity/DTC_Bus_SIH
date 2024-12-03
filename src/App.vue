@@ -15,6 +15,14 @@
 </template>
 
 <script>
+// import hello from './components/Ticket_map.vue'
+// import Navbar from './components/Navbar.vue'
+// import WeatherWidget from './components/WeatherWidget.vue'
+// import TimeTable from './components/TimeTable.vue'
+// import WeeklySchedule from './components/WeeklySchedule.vue'
+// import QuickStats from './components/QuickStats.vue'
+// import UpcomingSchedule from './components/UpcomingSchedule.vue'
+// import secondpage from './components/secondpage.vue'
 // import HelloWorld from './components/HelloWorld.vue'
 import HomePage from './components/HomePage.vue';
 import AboutUs from '/src/components/AboutUs.vue'
