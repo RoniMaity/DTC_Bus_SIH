@@ -13,6 +13,8 @@
       <!-- hello greeting is added  -->
 
     <h2 v-if="name">HELLO, {{ name }}!</h2>
+
+
   
       <form @submit.prevent="submitForm">
         <div>
@@ -26,6 +28,8 @@
           />
         </div>
   
+
+
         <div>
           <label for="email_input">Email <span class="required">*</span></label>
           <input
@@ -37,6 +41,9 @@
           />
         </div>
   
+
+
+
         <div>
           <label for="phone_input">Phone Number <span class="required">*</span></label>
           <input
@@ -49,6 +56,10 @@
           />
         </div>
   
+
+
+
+
         <div>
           <label for="suggestion_input">Suggestion <span class="required">*</span></label>
           <textarea
@@ -59,6 +70,9 @@
           ></textarea>
         </div>
   
+
+
+
         <!-- Complaint checkbox -->
         <div>
           <label for="complaint">Got a complaint?</label>
@@ -69,6 +83,8 @@
           />
         </div>
   
+
+
         <!-- Conditional complaint details form -->
         <div v-if="complaint">
           <div>
@@ -82,6 +98,8 @@
             />
           </div>
   
+
+
           <div>
             <label for="journey_time_input">Time of Journey </label>
             <input
@@ -91,6 +109,9 @@
             />
           </div>
   
+
+
+
           <div>
             <label for="complaint_details">Complaint Details <span class="required">*</span></label>
             <textarea
@@ -101,6 +122,8 @@
             ></textarea>
           </div>
   
+
+
           <!-- added the complaint numbers from dtc website  -->
           <div>
             <label>For customer care helpline, call at :</label>
@@ -111,10 +134,15 @@
           </div>
         </div>
   
+
+
         <button type="submit">Submit</button>
       </form>
     </div>
   
+
+
+
     <!-- Footer Section -->
     <footer class="footer">
       <p>
@@ -127,7 +155,9 @@
     <h2>HOPE YOU HAVE A NICE DAY!</h2>
   </template>
   
-  <script>
+
+
+  <!-- <script >
   export default {
     name: "Home",
     data() {
@@ -169,7 +199,101 @@
       }
     }
   };
+  </script> -->
+
+  <script>
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = 'https://codnrccajpjpchleelag.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNvZG5yY2NhanBqcGNobGVlbGFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxODM3MTYsImV4cCI6MjA0Nzc1OTcxNn0.Ymu1E_rzARqGolgHNxWiDmF2lchesA9Prngjk6lya6Y';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+
+  // import { supabase } from "@supabase/supabase-js"; 
+  
+  export default {
+    name: "Home",
+    data() {
+      return {
+        email: "",
+        name: "",
+        suggestion: "",
+        phone: "",
+        complaint: false,
+        busNo: "",
+        journeyTime: "",
+        complaintDetails: "",
+      };
+    },
+    methods: {
+      async submitForm() {
+        console.log("Form submitted with the following details:");
+        console.log("Email:", this.email);
+        console.log("Name:", this.name);
+        console.log("Suggestion:", this.suggestion);
+        console.log("Phone:", this.phone);
+        console.log("Complaint:", this.complaint);
+  
+        if (this.complaint) {
+          console.log("Bus Number:", this.busNo);
+          console.log("Journey Time:", this.journeyTime);
+          console.log("Complaint Details:", this.complaintDetails);
+        }
+  
+
+
+
+
+        try {
+          // Insert data into Supabase
+          const { data, error } = await supabase
+            .from('feedback')
+            .insert([{
+              name: this.name,
+              email: this.email,
+              phone: this.phone,
+              suggestion: this.suggestion,
+              complaint: this.complaint,
+              bus_no: this.busNo || null,
+              journey_time: this.journeyTime || null,
+              complaint_details: this.complaintDetails || null,
+            }]);
+  
+          if (error) {
+            console.error("Error inserting data:", error.message);
+            alert("Failed to submit your feedback. Please try again.");
+          } else {
+            console.log("Data inserted :", data);
+            alert("Thank you for your feedback!");
+            this.resetForm(); 
+          }
+        } catch (err) {
+          console.error("Unexpected error:", err);
+          alert("Something went wrong. Please try again later.");
+        }
+      },
+      resetForm() {
+        this.email = "";
+        this.name = "";
+        this.suggestion = "";
+        this.phone = "";
+        this.complaint = false;
+        this.busNo = "";
+        this.journeyTime = "";
+        this.complaintDetails = "";
+      },
+    },
+  };
   </script>
+  
+
+  
+
+
+
+
+
+
   
   <style scoped>
   /* Container for the entire page */
