@@ -1,35 +1,46 @@
 <template>
   <div class="stats-grid">
-    <div
-      v-for="stat in stats"
-      :key="stat.label"
-      :class="`stat-card ${stat.color}-card`"
-    >
-      <div :class="`icon ${stat.color}-icon`">
-        <component :is="stat.icon" class="icon-size" />
+    <div class="stat-card blue-card">
+      <div class="icon blue-icon">
+        <Route class="icon-size" />
       </div>
-      <p :class="`stat-value ${stat.color}-text`">{{ stat.value }}</p>
-      <p class="stat-label">{{ stat.label }}</p>
+      <p class="stat-value blue-text">4</p>
+      <p class="stat-label">Today's Routes</p>
+    </div>
+
+    <div class="stat-card green-card">
+      <div class="icon green-icon">
+        <Clock class="icon-size" />
+      </div>
+      <p class="stat-value green-text">6.5</p>
+      <p class="stat-label">Hours Driven</p>
+    </div>
+
+    <div class="stat-card orange-card">
+      <div class="icon orange-icon">
+        <Fuel class="icon-size" />
+      </div>
+      <p class="stat-value orange-text">8.2 km</p>
+      <p class="stat-label">Distance Travelled</p>
+    </div>
+
+    <div class="stat-card purple-card">
+      <div class="icon purple-icon">
+        <MapPin class="icon-size" />
+      </div>
+      <p class="stat-value purple-text">28</p>
+      <p class="stat-label">Stops Today</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { Route, Clock, Fuel, MapPin } from 'lucide-vue-next'
-
-// Define the stats data in Vue reactive state
-const stats = [
-  { icon: Route, label: "Today's Routes", value: '4', color: 'blue' },
-  { icon: Clock, label: 'Hours Driven', value: '6.5', color: 'green' },
-  { icon: Fuel, label: 'Distance Travelled', value: '8.2 km', color: 'orange' },
-  { icon: MapPin, label: 'Stops Today', value: '28', color: 'purple' }
-]
+import { Route, Clock, Fuel, MapPin } from 'lucide-vue-next';
 </script>
 
 <style scoped>
-/* Main grid container for the stat cards */
 .stats-grid {
-  margin: 2rem 1rem 2rem 1rem;
+  margin: 0rem 1rem 2rem 1rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
@@ -38,10 +49,11 @@ const stats = [
 @media (min-width: 1024px) {
   .stats-grid {
     grid-template-columns: repeat(4, 1fr);
+    margin: 0;
+    padding: 0;
   }
 }
 
-/* Individual stat card styles */
 .stat-card {
   padding: 1rem;
   border-radius: 0.75rem;
@@ -77,7 +89,6 @@ const stats = [
   border-color: #e9d7fe;
 }
 
-/* Icon styling */
 .icon {
   margin-bottom: 0.5rem;
 }
@@ -103,7 +114,6 @@ const stats = [
   color: #6b46c1;
 }
 
-/* Text color styling */
 .stat-value {
   font-size: 1.875rem;
   font-weight: 700;
@@ -126,16 +136,8 @@ const stats = [
   color: #6b46c1;
 }
 
-/* Label styling */
 .stat-label {
   font-size: 0.875rem;
   color: #718096;
-}
-
-/* Responsive styling */
-@media (min-width: 1024px) {
-  .stats-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
 }
 </style>
