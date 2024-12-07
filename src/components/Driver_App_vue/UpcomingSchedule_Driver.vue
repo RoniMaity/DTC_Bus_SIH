@@ -8,7 +8,6 @@
     </div>
 
     <div class="content">
-      <!-- Calendar Section -->
       <div class="calendar-container">
         <div class="calendar-header">
           <span class="calendar-month">{{ currentMonth }}</span>
@@ -17,9 +16,10 @@
           </button>
         </div>
         <div class="calendar-days">
-          <!-- Calendar Days (7 days of the week) -->
           <div v-for="(day, index) in weekDays" :key="index" class="calendar-day">
-            <div class="day-name">{{ day.name }}</div>
+            <div class="day-name" v-if="!isMobile">{{ day.name }}</div>
+            <div class="day-name" v-else>{{ day.nameAbbr }}</div>
+
             <div class="day-date" @click="showDaySchedule(day.date)">
               {{ day.date }}
             </div>
@@ -27,14 +27,12 @@
               <p v-for="(shift, shiftIndex) in selectedShifts" :key="shiftIndex">{{ shift }}</p>
             </div>
             <div v-if="selectedDate === day.date" class="no-shift">
-  No shifts scheduled
-</div>
-
+              No shifts scheduled
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Upcoming Schedule List -->
       <div class="schedule-list">
         <div v-if="selectedDate" class="schedule-item">
           <h3 class="schedule-date">{{ selectedDate }}</h3>
@@ -46,7 +44,6 @@
     </div>
   </div>
 
-  <!-- Full Month Calendar Modal -->
   <div v-if="isCalendarVisible" class="calendar-modal-overlay" @click="toggleCalendar">
     <div class="calendar-modal" @click.stop>
       <div class="calendar-month-modal">{{ currentMonth }}</div>
@@ -78,38 +75,42 @@ export default {
       ],
       scheduledDates: ['Mon 11', 'Tue 12', 'Wed 13', 'Thu 14', 'Fri 15', 'Sat 16'],
       currentDate: new Date(),
-      isCalendarVisible: false, // To toggle calendar modal visibility
-      selectedDate: null, // To store the clicked date
-      selectedShifts: [], // To store shifts for the selected day
+      isCalendarVisible: false,
+      selectedDate: null,
+      selectedShifts: [],
+      isMobile: false,
     };
   },
   computed: {
-    // Get the list of 7 days for the current week
     weekDays() {
-      const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      const currentDayIndex = this.currentDate.getDay(); // Get the current day (0-6)
+      const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const daysAbbr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const currentDayIndex = this.currentDate.getDay();
       const week = [];
       for (let i = 0; i < 7; i++) {
         const dayIndex = (currentDayIndex + i) % 7;
         const date = new Date();
-        date.setDate(this.currentDate.getDate() + i); // Increment the current day by i
-        const formattedDate = `${daysOfWeek[dayIndex]} ${date.getDate()}`;
-        week.push({ name: daysOfWeek[dayIndex], date: formattedDate });
+        date.setDate(this.currentDate.getDate() + i);
+        const formattedDate = `${date.getDate()}`;
+        week.push({
+          name: daysOfWeek[dayIndex],
+          nameAbbr: daysAbbr[dayIndex],
+          date: formattedDate,
+        });
       }
       return week;
     },
-    // Full month calendar days (for modal view)
     fullMonthDays() {
       const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      const currentMonth = this.currentDate.getMonth(); // Get current month
+      const currentMonth = this.currentDate.getMonth();
       const firstDayOfMonth = new Date(this.currentDate.getFullYear(), currentMonth, 1);
       const lastDayOfMonth = new Date(this.currentDate.getFullYear(), currentMonth + 1, 0);
       const totalDaysInMonth = lastDayOfMonth.getDate();
       const firstDayIndex = firstDayOfMonth.getDay();
-      
+
       let days = [];
       for (let i = 0; i < firstDayIndex; i++) {
-        days.push(null); // Add empty slots for previous month's days
+        days.push(null);
       }
       for (let i = 1; i <= totalDaysInMonth; i++) {
         const dayName = daysOfWeek[(firstDayIndex + i - 1) % 7];
@@ -117,55 +118,55 @@ export default {
       }
       return days;
     },
-    // Current month displayed in the calendar
     currentMonth() {
       const months = [
-        'January', 'February', 'March', 'April', 'May', 'June', 'July', 
+        'January', 'February', 'March', 'April', 'May', 'June', 'July',
         'August', 'September', 'October', 'November', 'December'
       ];
       return `${months[this.currentDate.getMonth()]} ${this.currentDate.getFullYear()}`;
     }
   },
+  mounted() {
+    this.isMobile = window.innerWidth <= 768;
+    window.addEventListener('resize', this.checkMobileView);
+  },
   methods: {
-    // Check if a shift is scheduled for a given day
     isShiftScheduled(date) {
       return this.scheduledDates.includes(date);
     },
-    // Get the shifts scheduled for a particular day
     getShiftsForDay(date) {
       const shift = this.upcomingShifts.find(shift => shift.date === date);
       return shift ? shift.shifts : [];
     },
-    // Show shifts for a selected day
     showDaySchedule(date) {
       this.selectedDate = date;
       this.selectedShifts = this.getShiftsForDay(date);
     },
-    // Toggle the calendar modal visibility
     toggleCalendar() {
       this.isCalendarVisible = !this.isCalendarVisible;
     },
-    // Check if a day is the current day
     isCurrentDay(date) {
       const currentDate = new Date();
       const targetDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), date);
       return currentDate.toDateString() === targetDate.toDateString();
+    },
+    checkMobileView() {
+      this.isMobile = window.innerWidth <= 768;
     }
   }
 };
 </script>
 
 <style scoped>
-/* Container for the whole schedule card */
 .schedule-container {
   background-color: transparent;
   border-radius: 1rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin: auto;
+  padding-top: 0;
   max-width: 100%;
 }
 
-/* Header section */
 .header {
   display: flex;
   align-items: center;
@@ -176,10 +177,11 @@ export default {
   font-weight: 600;
   display: flex;
   align-items: center;
+  margin: 0;
+  color: #162d59;
 }
 
 .title-icon {
-  margin-right: 0.5rem;
   height: 1.25rem;
   width: 1.25rem;
   color: #2563eb;
@@ -191,12 +193,11 @@ export default {
   transform: scale(1.1);
 }
 
-/* Calendar Section */
 .calendar-container {
   background-color: #f7fafc;
   border-radius: 0.75rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
+  padding: 0.5rem 1.5rem;
   width: 100%;
   margin-bottom: 2rem;
 }
@@ -253,12 +254,6 @@ export default {
   background-color: #e2e8f0;
 }
 
-.scheduled {
-  background-color: #ebf8ff;
-  color: #2563eb;
-}
-
-/* Modal styles */
 .calendar-modal-overlay {
   position: fixed;
   top: 0;
@@ -315,7 +310,6 @@ export default {
   border-radius: 0.375rem;
 }
 
-/* Spacing between schedule items */
 .schedule-list {
   margin-left: 1.5rem;
 }
@@ -342,17 +336,26 @@ export default {
 }
 
 @media (max-width: 768px) {
-  .schedule-container {
-    padding: 1rem;
-  }
-
   .calendar-days {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(7, 1fr);
   }
 
   .calendar-day {
     font-size: 0.75rem;
   }
+
+  .schedule-container {
+    padding: 1rem;
+    padding-bottom: 0;
+  }
+
+  .schedule-list {
+    margin-left: 0;
+  }
+
+  .schedule-item {
+    border-left: none;
+    padding-left: 0;
+  }
 }
 </style>
-4
