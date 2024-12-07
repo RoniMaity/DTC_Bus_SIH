@@ -24,7 +24,7 @@
         class="route-card"
       >
         <div class="route-card-background">
-          <img 
+          <img
             :src="getBusImage(index)"
             alt="Bus Image"
             class="background-image"
@@ -56,12 +56,11 @@
             </div>
           </div>
           <div class="route-info">
-            {{ route.route }} • 
+            {{ route.route }} •
             {{ route.status === 'Completed' ? '32 stops completed' : '45 min estimated' }}
           </div>
         </div>
 
-        <!-- Join Button -->
         <button class="join-button" @click="joinRoute(route)">Join</button>
       </div>
     </div>
@@ -72,10 +71,8 @@
 import { ref, computed } from 'vue';
 import { Clock, MapPin, ArrowRight } from 'lucide-vue-next';
 
-// Reactive state for the active tab
 const activeTab = ref('today');
 
-// Routes data
 const routes = [
   { time: '09:00', route: 'Route 423', from: 'Dwarka', to: 'Nehru Place', status: 'Completed' },
   { time: '11:30', route: 'Route 340', from: 'Nehru Place', to: 'Karol Bagh', status: 'In Progress' },
@@ -83,7 +80,6 @@ const routes = [
   { time: '16:30', route: 'Route 340', from: 'Dwarka', to: 'Nehru Place', status: 'Upcoming' },
 ];
 
-// Bus images
 const busImages = [
   'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=800',
   'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800',
@@ -91,26 +87,20 @@ const busImages = [
   'https://images.unsplash.com/photo-1494515843206-f3117d3f51b7?w=800'
 ];
 
-// Method to get a bus image based on the index
 const getBusImage = (index) => busImages[index % busImages.length];
 
-// Filter routes based on active tab (today or tomorrow)
 const filteredRoutes = computed(() => {
   return routes.filter(() => {
     return activeTab.value === 'today' || activeTab.value === 'tomorrow';
   });
 });
 
-
-// Method to handle the "Join" button click
 const joinRoute = (route) => {
   alert(`Joined ${route.route} from ${route.from} to ${route.to}!`);
 };
 </script>
 
-
 <style scoped>
-/* Container for the whole card component */
 .route-card-container {
   background-color: white;
   border-radius: 1rem;
@@ -119,14 +109,13 @@ const joinRoute = (route) => {
   width: 55%;
   margin-left: 3rem;
   margin-bottom: 2rem;
-  color: #1f2937; /* Dark text color for better visibility */
+  color: #1f2937;
 }
 
-/* Header section */
 .header {
   display: flex;
   justify-content: space-between;
-  /* margin-bottom: 1.5rem; */
+  margin-bottom: 1.5rem;
 }
 
 .title {
@@ -135,7 +124,7 @@ const joinRoute = (route) => {
   font-weight: 600;
   display: flex;
   align-items: center;
-  color: #1f2937; /* Darker title text */
+  color: #1f2937;
 }
 
 .title-icon {
@@ -157,12 +146,12 @@ const joinRoute = (route) => {
   font-size: 0.875rem;
   font-weight: 500;
   transition: background-color 0.3s, color 0.3s;
-  color: #1f2937; /* Dark text for tab buttons */
+  color: #1f2937;
 }
 
 .tab-button:hover {
   background-color: #e5e7eb;
-  color: #1f2937; /* Ensure dark color on hover */
+  color: #1f2937;
 }
 
 .active-tab {
@@ -172,12 +161,10 @@ const joinRoute = (route) => {
 
 .inactive-tab {
   background-color: #f3f4f6;
-  color: #1f2937; /* Darker color for inactive tabs */
+  color: #1f2937;
 }
 
-/* Route List */
 .route-list {
-  /* margin-top: 1rem; */
   gap: 1rem;
 }
 
@@ -190,13 +177,15 @@ const joinRoute = (route) => {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-/* Background image in the route card */
 .route-card-background {
   position: absolute;
   inset: 0;
-  opacity: 0.5; /* Opacity of background image */
+  opacity: 0.5;
 }
 
 .background-image {
@@ -206,14 +195,12 @@ const joinRoute = (route) => {
   object-position: center;
 }
 
-/* Route card content */
 .route-details {
   position: relative;
   z-index: 1;
-  color: #1f2937; /* Darker text color for readability */
+  color: #1f2937;
 }
 
-/* Route header */
 .route-header {
   display: flex;
   justify-content: space-between;
@@ -223,7 +210,6 @@ const joinRoute = (route) => {
 .route-time {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #1f2937; /* Dark color for time */
 }
 
 .status-label {
@@ -247,26 +233,23 @@ const joinRoute = (route) => {
   color: #6b7280;
 }
 
-/* Location section */
 .route-location {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   margin-top: 0.5rem;
-  color: #000000; /* Dark text for locations */
 }
 
 .location {
   display: flex;
   align-items: center;
-  color: #000000; /* Darker color for location names */
 }
 
 .location-icon {
   height: 1rem;
   width: 1rem;
   margin-right: 0.25rem;
-  color: #000000; /* Light color for icons */
+  color: #000000;
 }
 
 .arrow-icon {
@@ -275,14 +258,11 @@ const joinRoute = (route) => {
   color: #6b7280;
 }
 
-/* Route Info */
 .route-info {
   font-size: 0.875rem;
-  color: #000000; /* Dark color for route info */
   margin-top: 0.5rem;
 }
 
-/* Join Button */
 .join-button {
   position: absolute;
   bottom: 10px;
@@ -296,16 +276,51 @@ const joinRoute = (route) => {
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  z-index: 2; /* Ensure button stays above the background */
+  z-index: 2;
 }
 
 .join-button:hover {
   background-color: #1d4ed8;
 }
 
-/* Accessibility and Focus Styles */
-button:focus {
-  outline: 2px solid #2563eb;
-  outline-offset: 2px;
+@media (max-width: 768px) {
+  .route-card-container {
+    width: 90%;
+    margin-left: 1rem;
+    padding: 1rem;
+  }
+
+  .header {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .title {
+    font-size: 1.125rem;
+  }
+
+  .tabs {
+    margin-top: 1rem;
+    justify-content: center;
+  }
+
+  .tab-button {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .route-card {
+    flex-direction: column;
+  }
+
+  .route-info {
+    font-size: 0.75rem;
+  }
+
+  .join-button {
+    position: static;
+    margin-top: 1rem;
+    width: 100%;
+  }
 }
 </style>
