@@ -1,46 +1,34 @@
 <template>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <nav class="navbar">
     <div class="container">
       <div class="navbar-content">
-        <!-- Logo and Title -->
         <div class="logo">
           <div class="logo-icon">
             <Bus class="icon" />
           </div>
-          <span class="logo-title">DTC Driver Portal</span>
+          <span class="logo-title">Driver Portal</span>
         </div>
 
-        <!-- Hamburger Button (Always Visible) -->
-        <button class="toggle-button" @click="toggleMenu">
-          <div class="toggle-icon"></div>
-          <div class="toggle-icon"></div>
-          <div class="toggle-icon"></div>
-        </button>
-
-        <!-- Right side (Notification, Profile) -->
         <div class="right-side">
-          <!-- Notifications Bell -->
-          <button class="notification-button" @click="toggleNotifications">
-            <Bell class="icon-small" />
-            <span v-if="hasUnreadNotifications" class="notification-dot"></span>
-          </button>
 
-          <!-- Profile Dropdown -->
+          <q-btn round icon="notifications">
+            <q-badge floating color="red" rounded />
+          </q-btn>
+
+          <span v-if="hasUnreadNotifications" class="notification-dot"></span>
+
           <div class="profile-dropdown">
             <div class="profile-info">
               <p class="profile-name">XYZABC</p>
               <p class="profile-id">Driver #4872</p>
             </div>
             <div class="profile-image" @click="toggleProfileMenu">
-              <img
-                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400"
-                alt="Driver profile"
-                class="image"
-              />
+              <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400" alt="Driver profile"
+                class="image" />
             </div>
-            <!-- Profile Dropdown Menu -->
             <div v-if="isProfileMenuOpen" class="profile-menu">
-              <p class="profile-name">Rajesh Kumar</p>
+              <p class="profile-name">XYZABC</p>
               <p class="profile-id">Driver #4872</p>
               <div>
                 <button @click="logout" class="logout-button">
@@ -53,7 +41,6 @@
       </div>
     </div>
 
-    <!-- Side Menu (Hamburger Menu) -->
     <div v-if="isMenuOpen" class="side-menu">
       <ul>
         <li><button @click="goHome">Home</button></li>
@@ -66,14 +53,10 @@
 
 <script setup>
 import { ref } from 'vue';
-import { Bus, Bell } from 'lucide-vue-next';
 
-// State for unread notifications, profile dropdown, and mobile menu
 const hasUnreadNotifications = ref(true);
 const isProfileMenuOpen = ref(false);
-const isMenuOpen = ref(false); // For mobile hamburger menu
 
-// Toggle notification state
 const toggleNotifications = () => {
   hasUnreadNotifications.value = !hasUnreadNotifications.value;
   if (hasUnreadNotifications.value) {
@@ -83,22 +66,14 @@ const toggleNotifications = () => {
   }
 };
 
-// Toggle profile menu
 const toggleProfileMenu = () => {
   isProfileMenuOpen.value = !isProfileMenuOpen.value;
 };
 
-// Log out
 const logout = () => {
   alert('You have logged out!');
 };
 
-// Toggle the mobile hamburger menu
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value;
-};
-
-// Navigation actions (these can be customized further)
 const goHome = () => {
   alert('Going to Home');
 };
@@ -109,77 +84,58 @@ const goProfile = () => {
 </script>
 
 <style scoped>
-/* Navbar styling */
 .navbar {
-  background: linear-gradient(to right, #1e3a8a, #1d4ed8); /* from-blue-800 to-blue-900 */
+  background-color: #1e3a8a;
   color: white;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px, rgba(0, 0, 0, 0.1) 0px 1px 3px;
   margin-bottom: 0;
 }
 
-/* Container for navbar content */
 .container {
   max-width: 7xl;
   margin: 0 auto;
   padding: 0 1rem;
 }
 
-/* Main navbar content, flexbox layout */
 .navbar-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 4rem;
+  flex-wrap: wrap;
 }
 
-/* Hamburger Button (Always Visible) */
-.toggle-button {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 2rem;
-  height: 1.25rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.toggle-icon {
-  width: 100%;
-  height: 2px;
-  background-color: white;
-  transition: all 0.3s ease;
-}
-
-/* Logo section */
 .logo {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 2rem;
 }
 
 .logo-icon {
   background-color: rgba(255, 255, 255, 0.1);
-  padding: 0.5rem;
-  border-radius: 0.375rem;
+  padding-right: 0.5rem;
+  padding-left: 0.7rem;
+  margin-bottom: 2rem;
+  padding-top: 0.3rem;
+  border-radius: 40%;
 }
 
 .logo-title {
   font-weight: bold;
   font-size: 1.25rem;
+  padding-bottom: 2rem;
 }
 
-/* Right side (Notification, Profile) */
 .right-side {
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
-/* Notification button */
 .notification-button {
-  /* padding: 0.5rem; */
   padding-bottom: 7px;
   padding-top: 9px;
   border-radius: 1000px;
@@ -205,13 +161,12 @@ const goProfile = () => {
   border-radius: 9999px;
 }
 
-/* Profile dropdown */
 .profile-dropdown {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   border-left: 1px solid rgba(255, 255, 255, 0.2);
-  padding-left: 1.5rem;
+  padding-left: 0.5rem;
   position: relative;
 }
 
@@ -222,6 +177,8 @@ const goProfile = () => {
 
 .profile-name {
   font-weight: 500;
+  margin-bottom: 0;
+  margin-top: 10px;
 }
 
 .profile-id {
@@ -243,7 +200,6 @@ const goProfile = () => {
   object-fit: cover;
 }
 
-/* Profile dropdown menu */
 .profile-menu {
   position: absolute;
   top: 100%;
@@ -262,7 +218,6 @@ const goProfile = () => {
   color: #f56565;
 }
 
-/* Side Menu (Hamburger) */
 .side-menu {
   position: fixed;
   top: 0;
@@ -300,16 +255,38 @@ const goProfile = () => {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Prevent wrapping on smaller screens */
 @media (max-width: 768px) {
-  .navbar-content {
-    flex-wrap: wrap;
+
+  .logo {
+    margin: 0;
+    padding-top: 17px;
   }
 
-  /* Ensure the hamburger button is always visible */
-  .toggle-button {
+  .container {
+    margin: 0;
+    padding: 0;
+  }
+
+  .navbar-content {
     display: flex;
+    flex-direction: column;
+  }
+
+  .right-side {
+    justify-content: flex-end;
+    margin-left: 40px;
+  }
+
+  .side-menu {
+    display: none;
+  }
+
+  .profile-dropdown {
+    margin-left: 0px;
+  }
+
+  .profile-menu {
+    width: auto;
   }
 }
-
 </style>
