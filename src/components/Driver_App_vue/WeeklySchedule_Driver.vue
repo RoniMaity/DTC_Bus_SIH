@@ -1,18 +1,15 @@
 <template>
   <div class="weekly-overview">
-    <!-- Background Image (Optional) -->
     <div class="bg-overlay">
       <img alt="Background" class="bg-image" />
     </div>
 
     <div class="content">
-      <!-- Header Section -->
       <h2 class="title">
         <Calendar class="icon" />
         Weekly Overview
       </h2>
 
-      <!-- Days of the Week -->
       <div class="days">
         <div
           v-for="day in weekDays"
@@ -26,7 +23,6 @@
             </span>
           </div>
 
-          <!-- Show route information if the day is not Sunday -->
           <div v-if="day !== 'Sunday'" class="route-info">
             Route 423: Dwarka ↔ Nehru Place
           </div>
@@ -34,66 +30,52 @@
       </div>
     </div>
   </div>
-  
-  
 </template>
+
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { Calendar } from 'lucide-vue-next'
 
-// Array of days in the week, starting from Monday
 const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-
-// Track the current day of the week and current time
 const currentDay = ref('')
 const currentTime = ref('')
 
-// Update the current day and time every minute
 const updateTime = () => {
   const currentDate = new Date()
-  const dayIndex = currentDate.getDay() // Get the day as a number (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-  
-  // Set current day (adjust for Sunday = 0, we want Sunday to be the 7th day)
+  const dayIndex = currentDate.getDay()
+
   currentDay.value = weekDays[dayIndex === 0 ? 6 : dayIndex - 1]
-  
-  // Set current time in HH:MM format
   currentTime.value = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 }
 
-// Get the shift time based on the current time of the day
 const getShiftTime = (day) => {
   if (day === 'Sunday') return 'Off Day'
-  
+
   const currentDate = new Date()
   const currentHour = currentDate.getHours()
 
-  // Morning shift
   if (currentHour >= 6 && currentHour < 14) {
     return `6 AM - 2 PM`
   }
 
-  // Evening shift (Optional, can be customized)
   if (currentHour >= 14 && currentHour < 22) {
     return `2 PM - 10 PM`
   }
 
-  // After hours (Off Duty)
   return 'Off Duty'
 }
 
-// Watch and update current time every minute
 onMounted(() => {
   updateTime()
-  setInterval(updateTime, 60000) // Update every minute
+  setInterval(updateTime, 60000)
 })
 
-// Cleanup interval when component is destroyed
 onUnmounted(() => {
   clearInterval(updateTime)
 })
 </script>
+
 <style scoped>
-/* Container styling */
 .weekly-overview {
   background-color: white;
   border-radius: 1rem;
@@ -101,12 +83,11 @@ onUnmounted(() => {
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
-  width: 40%;
-  margin-left: 3rem;
-  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 2rem;
 }
 
-/* Background overlay */
 .bg-overlay {
   position: absolute;
   inset: 0;
@@ -119,19 +100,18 @@ onUnmounted(() => {
   object-fit: cover;
 }
 
-/* Content section */
 .content {
   position: relative;
   z-index: 10;
 }
 
-/* Header styling */
 .title {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
+  text-align: center;
 }
 
 .icon {
@@ -141,9 +121,11 @@ onUnmounted(() => {
   color: #2563eb;
 }
 
-/* Days container */
 .days {
-  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .day {
@@ -155,7 +137,7 @@ onUnmounted(() => {
 
 .day.active {
   border-color: #3b82f6;
-  background-color: rgba(219, 234, 254, 0.8); /* Light blue with transparency */
+  background-color: rgba(219, 234, 254, 0.8);
   backdrop-filter: blur(4px);
 }
 
@@ -185,8 +167,38 @@ onUnmounted(() => {
   font-size: 0.875rem;
 }
 
-/* Hover effect for days */
 .day:hover {
   border-color: #93c5fd;
+}
+
+@media (max-width: 768px) {
+  .weekly-overview{
+    width: 400px;
+    margin-bottom: 2rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .days {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .day {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .icon {
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+
+  @media (max-width: 480px) {
+    .days {
+      grid-template-columns: 1fr;
+    }
+  }
 }
 </style>
