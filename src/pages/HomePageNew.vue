@@ -144,7 +144,7 @@ export default {
           id: 2,
           name: "Qutub Minar",
           image:
-            "https://upload.wikimedia.org/wikipedia/commons/7/7a/Qutub_Minar_Complex.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Qutb_minar_ruins.jpg/800px-Qutb_minar_ruins.jpg",
           link: "https://en.wikipedia.org/wiki/Qutub_Minar",
         },
         {
