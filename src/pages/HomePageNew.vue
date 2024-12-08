@@ -107,7 +107,10 @@
           :center="center"
           :zoom="12"
         >
-          <Marker :position="center" />
+          <GMapMarker :options="{
+            position: center,
+            title: 'Delhi, India',
+          }" />
         </GoogleMap>
       </div>
     </footer>
@@ -115,7 +118,7 @@
 </template>
 
 <script>
-import { GoogleMap, Marker } from "vue3-google-map";
+import { GoogleMap, Marker as GMapMarker } from "vue3-google-map";
 
 export default {
   data() {
@@ -181,6 +184,7 @@ export default {
   },
   components: {
     GoogleMap,
+    GMapMarker,
   },
 };
 </script>
