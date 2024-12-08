@@ -1,21 +1,29 @@
-
 <template>
-  <q-page>
+  <q-page class="q-pa-none">
     <!-- Hero Image Section -->
-    <div class="hero-image">
-      <div
-        class="image"
-        v-for="(image, index) in heroImages"
-        :key="index"
-        :style="{ backgroundImage: 'url(' + image + ')' }"
-      ></div>
-      <!-- Search Form -->
-      <div class="search-container">
-        <q-input v-model="source" placeholder="Source" />
-        <q-btn @click="swapLocations" icon="swap_horiz" />
-        <q-input v-model="destination" placeholder="Destination" />
-        <q-input v-model="busNumber" placeholder="Bus no." />
-        <q-btn @click="searchBus" label="Search" class="search-btn" />
+    <div class="hero-image q-py-xl">
+      <div class="row justify-center q-py-xl q-my-xl">
+        <div class="col-10 col-md-6">
+          <q-card>
+            <q-item>
+              <q-item-section>
+                <q-input outlined dense v-model="source" placeholder="Source" />
+              </q-item-section>
+              <q-item-section side style="padding: 0">
+                <q-btn flat round @click="swapLocations" icon="swap_horiz" />
+              </q-item-section>
+              <q-item-section>
+                <q-input outlined dense v-model="destination" placeholder="Destination" />
+              </q-item-section>
+              <q-item-section>
+                <q-input outlined dense v-model="busNumber" placeholder="Bus no." />
+              </q-item-section>
+              <q-item-section>
+                <q-btn @click="searchBus" label="Search" class="search-btn" />
+              </q-item-section>
+            </q-item>
+          </q-card>
+        </div>
       </div>
     </div>
 
@@ -49,15 +57,24 @@
       <h2 class="news-heading">Latest News and Announcements</h2>
       <div class="news-item">
         <h3>New Bus Routes Added!</h3>
-        <p>We are excited to announce the addition of new bus routes across Delhi. Stay tuned for further updates!</p>
+        <p>
+          We are excited to announce the addition of new bus routes across
+          Delhi. Stay tuned for further updates!
+        </p>
       </div>
       <div class="news-item">
         <h3>Bus Timings Changed</h3>
-        <p>Due to road construction, some bus routes have updated timings. Check your local routes for the new schedules.</p>
+        <p>
+          Due to road construction, some bus routes have updated timings. Check
+          your local routes for the new schedules.
+        </p>
       </div>
       <div class="news-item">
         <h3>Feedback Program</h3>
-        <p>Your feedback matters! We are launching a new feedback program to improve our services. Share your thoughts with us!</p>
+        <p>
+          Your feedback matters! We are launching a new feedback program to
+          improve our services. Share your thoughts with us!
+        </p>
       </div>
     </div>
 
@@ -107,10 +124,12 @@
           :center="center"
           :zoom="12"
         >
-          <GMapMarker :options="{
-            position: center,
-            title: 'Delhi, India',
-          }" />
+          <GMapMarker
+            :options="{
+              position: center,
+              title: 'Delhi, India',
+            }"
+          />
         </GoogleMap>
       </div>
     </footer>
@@ -132,6 +151,7 @@ export default {
         "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/DTC_AC_Bus.jpg/2560px-DTC_AC_Bus.jpg",
         "data:image/jpeg;base64,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",
       ],
+
       popularPlaces: [
         {
           id: 1,
@@ -164,6 +184,7 @@ export default {
       ],
     };
   },
+  mounted() {},
   methods: {
     swapLocations() {
       let temp = this.source;
@@ -193,8 +214,46 @@ export default {
 .hero-image {
   position: relative;
   width: 100%;
-  height: 300px;
   overflow: hidden;
+  background-image: url("assets/images/hero/hero1.jpeg");
+  transition: all 0.5s ease;
+  animation: heroImageChanger 7s infinite;
+  animation-direction: alternate;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+@keyframes heroImageChanger {
+  0% {
+    background-image: url("assets/images/hero/hero1.jpeg");
+  }
+  24% {
+    background-image: url("assets/images/hero/hero1.jpeg");
+  }
+
+  25% {
+    background-image: url("assets/images/hero/hero2.jpg");
+  }
+
+  49% {
+    background-image: url("assets/images/hero/hero2.jpg");
+  }
+  50% {
+    background-image: url("assets/images/hero/hero3.jpg");
+  }
+
+  74% {
+    background-image: url("assets/images/hero/hero3.jpg");
+  }
+
+  75% {
+    background-image: url("assets/images/hero/hero1.jpeg");
+  }
+
+  100% {
+    background-image: url("assets/images/hero/hero1.jpeg");
+  }
 }
 
 .image {
