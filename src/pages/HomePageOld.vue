@@ -8,10 +8,13 @@
             <span class="q-mx-md">Delhi Transport Corporation</span>
             <span>Government of NTC of Delhi</span>
           </q-toolbar-title>
-          <q-btn flat @click="switchToHindi" label="हिन्दी" />
-          <q-btn flat @click="switchToEnglish" label="English" />
-          <q-btn flat label="Passenger"/>
-          <q-btn flat label="Administrator"/>
+          <div class="top-header">
+            <q-btn flat @click="switchToHindi" label="हिन्दी" />
+            <q-btn flat @click="switchToEnglish" label="English" />
+            <q-btn flat label="Passenger"/>
+            <q-btn flat label="Administrator"/>
+          </div>
+
         </q-toolbar>
       </q-header>
       <!-- Main Content -->
@@ -25,7 +28,7 @@
             <q-btn @click="searchBus" label="Search" />
           </div>
         </div>
-  
+
         <h2 class="pop-heading">Popular places in Delhi...</h2>
         <div class="popular-destinations">
           <q-card
@@ -38,7 +41,7 @@
           </q-card>
         </div>
       </q-page>
-  
+
       <!-- Footer -->
       <q-footer>
         <div class="foot">
@@ -48,22 +51,22 @@
           <q-btn flat label="Home" />
           <q-btn flat label="Feedback" />
         </div>
-  
+
         <div class="footer-content">
           <div class="footer-center">
             <p>Contact Us:</p>
             <ul>
               <p>Phone:  +91 123 456 7890</p><br>
               <p>Email: support@dtc.gov.in</p><br>
-              <p>Address: DTC Headquarters, Delhi, India</p> 
+              <p>Address: DTC Headquarters, Delhi, India</p>
             </ul>
           </div>
-  
+
           <div class="map-container">
-            <div id="map"></div> 
+            <div id="map"></div>
           </div>
         </div>
-  
+
         <div class="social-links">
           <p>Follow Us:</p>
           <ul>
@@ -93,7 +96,7 @@
       </q-footer>
     </q-layout>
   </template>
-  
+
   <script>
   export default {
     data() {
@@ -167,7 +170,7 @@
   },
 };
   </script>
-  
+
   <style>
   .hero-image {
     background-image: url('https://etimg.etb2bimg.com/photo/106277723.cms');
@@ -178,43 +181,47 @@
     justify-content: center;
     align-items: center;
   }
-  
+
   .search-container {
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     padding: 30px 50px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
   }
-  
+
   .popular-destinations {
     display: flex;
-    flex-direction: row; 
-    align-items: center; 
+    flex-direction: row;
+    align-items: center;
     margin: 15px;
     padding: 20px;
     justify-content: space-evenly;
   }
-  
+
   .destination-box {
     font-family: 'Times New Roman', Times, serif;
-    width: calc(30% - 20px); 
-    height: 200px; 
-    margin-bottom: 20px; 
-    position: relative; 
-    border-radius: 10px; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
-    background-size: cover; 
+    width: calc(30% - 20px);
+    height: 200px;
+    margin-bottom: 20px;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    background-size: cover;
     background-position: center;
   }
-  
+
   .destination-text {
-    position: absolute; 
-    bottom: 10%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    color: white; 
-    font-size: 24px; 
-    text-shadow: 2px 2px rgba(0,0,0,0.7); 
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+    text-shadow: 2px 2px rgba(0,0,0,0.7);
   }
   .foot{
     display: flex;
@@ -225,22 +232,22 @@
     justify-content: center;
   }
   .footer-content {
-    display: flex; 
-    justify-content: space-between; 
-    align-items: flex-start; 
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
   }
-  
+
   .map-container {
-    position: relative; 
-    width: 300px; 
-    height: 200px; 
-    border: 1px solid #ccc; 
-    border-radius: 5px; 
-    overflow: hidden; 
+    position: relative;
+    width: 300px;
+    height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
   }
-  
+
   #map {
-    height: 100%; 
-    width: 100%; 
+    height: 100%;
+    width: 100%;
   }
   </style>

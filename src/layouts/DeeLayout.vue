@@ -94,6 +94,7 @@
         </div>
       </div>
     </div>
+    <div class="map-container"></div>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <ChatbotWindow />
